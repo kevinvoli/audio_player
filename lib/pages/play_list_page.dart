@@ -111,13 +111,5 @@ class PlayListPageState extends State<PlayListPage> {
     );
   }
 
-  ListBody bodyList(int index) {
-    return ListBody(
-      children: [
-        Text(index.toString()),
-        SizedBox(height: 5),
-        Text(audioService.musics[index].title.toString()),
-      ],
-    );
-  }
+ 
 }

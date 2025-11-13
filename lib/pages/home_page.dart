@@ -1,3 +1,4 @@
+import 'package:audio_player/widget/progress_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_player/services/audio_service.dart';
 import 'package:audio_player/widget/payer_controls.dart';
@@ -95,68 +96,15 @@ class HomePageState extends State<HomePage> {
               const SizedBox(height: 40),
 
               // ✅ Barre de progression
-              StreamBuilder<Duration>(
-                stream: audioService.player.positionStream,
-                builder: (context, snapshot) {
-                  final position = snapshot.data ?? Duration.zero;
-                  final duration =
-                      audioService.player.duration ?? Duration.zero;
-                  return Column(
-                    children: [
-                      Slider(
-                        activeColor: Colors.purpleAccent,
-                        inactiveColor: Colors.white24,
-                        value: position.inSeconds.toDouble(),
-                        max: duration.inSeconds.toDouble(),
-                        onChanged: (v) => audioService.player.seek(
-                          Duration(seconds: v.toInt()),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            _formatTime(position),
-                            style: const TextStyle(color: Colors.white70),
-                          ),
-                          Text(
-                            _formatTime(duration),
-                            style: const TextStyle(color: Colors.white70),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                },
-              ),
+              ProgressBar(),
               const SizedBox(height: 30),
 
               // ✅ Contrôles audio
-              const PlayerControls(),
+              PlayerControls(),
 
               const SizedBox(height: 20),
 
               // ✅ Boutons supplémentaires
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.favorite_border,
-                      color: Colors.white70,
-                    ),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.playlist_add, color: Colors.white70),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.share, color: Colors.white70),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
             ],
           ),
         ),
@@ -164,8 +112,5 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  String _formatTime(Duration d) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    return '${twoDigits(d.inMinutes.remainder(60))}:${twoDigits(d.inSeconds.remainder(60))}';
-  }
+  
 }
